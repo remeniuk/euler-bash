@@ -1,9 +1,6 @@
 # 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
 # What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
-
-sqrt() {
-	printf "%.0f\n" $(echo "sqrt ( $1 )" | bc -l)
-}
+. math.sh
 
 array_mult() {
 	mult=1
@@ -13,37 +10,6 @@ array_mult() {
 		mult=$(($mult * $i))
 	done
 	echo $mult
-}
-
-filter_primes() {
-	range=$1
-	primes=()
-	for (( i=2; i<=$range; i++ ))
-	do
-		primes=("${primes[@]}" true)
-	done
-
-	for (( i=2; i<=$(sqrt $range); i++ ))
-	do		
-		if ( ${primes[$i]} )
-			then			
-			for (( j=$(($i * $i)); j<=$range; j=$(($j + $i)) ))
-			do
-				primes[$j]=false
-			done
-		fi
-	done
-	
-	res=()
-	for (( i=2; i<=$range; i++ ))
-	do
-		if ( ${primes[$i]} )
-			then
-			res=("${res[@]}" $i)
-		fi
-	done
-
-	echo ${res[@]}
 }
 
 is_evenly_divisable() {
